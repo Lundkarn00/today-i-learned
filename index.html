@@ -20,7 +20,7 @@
         <h1>Today I Learned!</h1>
         </div>
 
-        <button>Share a fact</button>
+        <button class="btn btn-large">Share a fact</button>
       </header>
 
       <form class="fact-form">
@@ -33,20 +33,20 @@
           <option value="science">Science</option>
           <option value="finance">Finance</option>
         </select>
-        <button>Post</button>
+        <button class="btn btn-large">Post</button>
       </form>
 
       <main class="main">
         <aside>
           <ul>
-            <li>
-              <button>All</button>
+            <li class="category">
+              <button class="btn btn-all-categories">All</button>
             </li>
-            <li>
-              <button>Technology</button>
+            <li class="category">
+              <button class="btn btn-category" style="background-color: #3b82f6;">Technology</button>
             </li>
-            <li>
-              <button>Science</button>
+            <li class="category">
+              <button class="btn btn-category" style="background-color: #16a34a;">Science</button>
             </li>
           </ul>
         </aside>
@@ -58,11 +58,11 @@
                 React is being developed by Meta (formerly facebook)
                 <a class="source" href="https://opensource.fb.com/" target="_blank">(Source)</a>
               </p>
-              <span class="tag" style="background-color: #3b82f6;">#technology#</span>
+              <span class="tag" style="background-color: #3b82f6;">technology</span>
               <div class="vote-buttons">
-                <button>👍 <strong>24</strong></button>
-                <button>🤯 <strong>9</strong></button>
-                <button>⛔ <strong>4</strong></button>
+                <button>👍 24</button>
+                <button>🤯 9</button>
+                <button>⛔ 4</button>
               </div>
             </li>
             <li class="fact">
@@ -76,11 +76,11 @@
                   >(Source)</a
                 >
               </p>
-              <span class="tag" style="background-color: #eab308;">#society#</span>
+              <span class="tag" style="background-color: #eab308;">society</span>
               <div class="vote-buttons">
-                <button>👍 <strong>11</strong></button>
-                <button>🤯 <strong>2</strong></button>
-                <button>⛔ <strong>0</strong></button>
+                <button>👍 11</button>
+                <button>🤯 2</button>
+                <button>⛔ 0</button>
               </div>
             </li>
           </ul>
