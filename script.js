@@ -1,3 +1,4 @@
+/*
 console.log('Hello World');
 
 const btn = document.querySelector('.btn-open')
@@ -12,6 +13,7 @@ btn.addEventListener('click', function () {
         btn.textContent = 'Share a fact';
     }
 });
+*/
 
 /*
 let votesInteresting = 23;
@@ -31,7 +33,7 @@ console.log(isCorrect);
 
 console.log(parseInt('24.533ccc'));
 */
-
+/*
 function calcFactAge(year) {
     const currentYear = new Date().getFullYear();
     const age = currentYear - year;
@@ -49,6 +51,8 @@ console.log(calcFactAge(1990));
 console.log(calcFactAge(2037));
 
 const calcFactAge2 = (year) => year <= new Date().getFullYear() ? new Date().getFullYear() - year : `Impossible year. Needs to be less than or equal to ${new Date().getFullYear()}`;
+
+//const calcFactAge2 = year => 2026 - year;
 
 console.log(calcFactAge2(2015));
 console.log(calcFactAge2(2037));
@@ -93,3 +97,31 @@ const str = `The current fact is "${text}". It is ${
 }.`;
 console.log(str);
 */
+
+const fact = ['Lisbon is the capital of Portugal', 2015, true];
+console.log(fact);
+console.log(fact[2]);
+console.log(fact.length);
+console.log(fact[fact.length - 1]);
+
+const [text, createdIn] = fact;
+console.log(createdIn);
+
+const newFact = [...fact, 'society'];
+console.log(newFact);
+
+const factObj = {
+    text: 'Lisbon is the capital of Portugal',
+    category: 'society',
+    createdIn: 2015,
+    isCorrect: true,
+    createSummary: function() {
+        return `The fact "${this.text}" is from the category ${this.category.toUpperCase()}.`;
+    }
+}
+console.log(factObj.text);
+console.log(factObj['text']);
+
+const {category, isCorrect} = factObj;
+console.log(category);
+console.log(factObj.createSummary());
