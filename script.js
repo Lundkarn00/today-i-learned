@@ -48,6 +48,11 @@ console.log(calcFactAge(2020));
 console.log(calcFactAge(1990));
 console.log(calcFactAge(2037));
 
+const calcFactAge2 = (year) => year <= new Date().getFullYear() ? new Date().getFullYear() - year : `Impossible year. Needs to be less than or equal to ${new Date().getFullYear()}`;
+
+console.log(calcFactAge2(2015));
+console.log(calcFactAge2(2037));
+
 /*
 let votesInteresting = 20;
 let votesMindblowing = 5;

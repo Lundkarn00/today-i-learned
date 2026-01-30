@@ -105,20 +105,12 @@ Potential enhancements:
 - ✅ Prevent duplicate fact submissions
 - ✅ Sort facts by vote count or recency
 
-## Contributing
-
-Contributions welcome! Feel free to:
-1. Add new facts to `initialFacts` in `data.js`
-2. Improve styling in `styles.css`
-3. Add new interactive features in `script.js`
-4. Enhance the HTML structure in `index.html`
-
 ## License
 
 This project is open source and available under the MIT License.
 
 ## Credits
 
-- Inspired by the concept of community knowledge sharing
+- "Crash Course: Build a Full-Stack Web App in a Weekend!" by Jonas Schmedtmann
 - Data reference: [Google Sheets backup](https://docs.google.com/spreadsheets/d/1eeldcA_OwP4DHYEvjG0kDe0cRys-cDPhc_E9P9G1e3I/edit)
 - Built with vanilla web technologies
