@@ -1,116 +1,70 @@
-# Today I Learned 🧠
+# Getting Started with Create React App
 
-A community-driven fact-sharing web application where users submit interesting facts with sources and vote on their credibility and impact using three categories.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Features
+## Available Scripts
 
-✨ **Share Facts** - Submit interesting facts with trustworthy sources
-👍 **Vote on Credibility** - Three voting categories:
-  - **Interesting** (👍) - Everyday learnings and cool insights
-  - **Mind-blowing** (🤯) - Surprising or shocking discoveries
-  - **False** (⛔) - Facts that seem questionable or incorrect
+In the project directory, you can run:
 
-📂 **Filter by Category** - Browse facts organized by topic:
-  - Technology, Science, Finance, Society, Entertainment, Health, History, News
+### `npm start`
 
-🎨 **Dark Theme** - Easy on the eyes with a modern dark interface
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-📱 **Responsive Design** - Works seamlessly on desktop and mobile devices
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-## Getting Started
+### `npm test`
 
-### Prerequisites
-- A modern web browser (Chrome, Firefox, Safari, Edge)
-- No installation or build process required!
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### How to Use
+### `npm run build`
 
-1. **Open the app** - Simply open `index.html` in your web browser
-2. **Share a fact** - Click "Share a fact" to open the form:
-   - Enter fact text (up to 200 characters)
-   - Add a trustworthy source URL
-   - Select a category
-   - Click "Post"
-3. **Vote on facts** - Click the emoji buttons to vote:
-   - 👍 for interesting
-   - 🤯 for mind-blowing
-   - ⛔ if you think it's false
-4. **Filter facts** - Use the sidebar buttons to filter by category
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-## Project Structure
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-```
-today-i-learned/
-├── index.html          # Main HTML structure
-├── styles.css          # Dark theme styling & responsive layout
-├── script.js           # Interactive features (form toggle, voting)
-├── data.js             # Category definitions & initial facts
-├── .github/
-│   └── copilot-instructions.md  # AI agent guidance
-└── README.md           # This file
-```
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Data Model
+### `npm run eject`
 
-Each fact contains:
-```javascript
-{
-  id: 1,
-  text: "Fact description",
-  source: "https://source-url.com",
-  category: "technology",
-  votesInteresting: 24,
-  votesMindblowing: 9,
-  votesFalse: 4,
-  createdIn: 2021
-}
-```
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-### Categories
-- `technology` - Tech and software facts
-- `science` - Scientific discoveries
-- `finance` - Money and economics
-- `society` - Social and cultural topics
-- `entertainment` - Movies, music, games
-- `health` - Medical and wellness facts
-- `history` - Historical events
-- `news` - Current affairs
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-## Development
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-### Key Technologies
-- **HTML5** - Semantic structure
-- **CSS3** - Grid layout, flexbox, responsive design
-- **Vanilla JavaScript** - No frameworks, pure DOM manipulation
-- **Google Fonts** - "Coiny" (headings) and "Sono" (body)
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-### Styling Conventions
-- Dark theme: `#292524` (background), `#fafaf9` (text), `#44403c` (cards)
-- Categories use distinct colors (see `data.js`)
-- Responsive breakpoint at 1000px
+## Learn More
 
-### JavaScript Patterns
-- Event listeners with `.addEventListener()` and function expressions
-- DOM selection with `document.querySelector()`
-- CSS class toggling (`.hidden`) for visibility control
-- Helper functions like `calcFactAge(year)` for logic
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-## Roadmap
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-Potential enhancements:
-- ✅ Persist facts to local storage or backend database
-- ✅ Implement category filtering
-- ✅ Auto-increment vote counts
-- ✅ Dynamic fact rendering from data array
-- ✅ Prevent duplicate fact submissions
-- ✅ Sort facts by vote count or recency
+### Code Splitting
 
-## License
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-This project is open source and available under the MIT License.
+### Analyzing the Bundle Size
 
-## Credits
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-- "Crash Course: Build a Full-Stack Web App in a Weekend!" by Jonas Schmedtmann
-- Data reference: [Google Sheets backup](https://docs.google.com/spreadsheets/d/1eeldcA_OwP4DHYEvjG0kDe0cRys-cDPhc_E9P9G1e3I/edit)
-- Built with vanilla web technologies
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
