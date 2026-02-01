@@ -44,36 +44,38 @@ const CATEGORIES = [
 ];
 
 // Selecting DOM elements
-const btn = document.querySelector('.btn-open')
-const form = document.querySelector('.fact-form')
-const factsList = document.querySelector('.facts-list')
+const btn = document.querySelector(".btn-open");
+const form = document.querySelector(".fact-form");
+const factsList = document.querySelector(".facts-list");
 
 // Create DOM elements: Render facts in list
-factsList.innerHTML = '';
-
+factsList.innerHTML = "";
 
 //Load data from Supabase
 loadFacts();
 
 async function loadFacts() {
-    const res = await fetch('https://ladfnwsrssiofdsbojeq.supabase.co/rest/v1/facts', {
-    headers: {
-        apikey: 'sb_publishable_uEtrioCkKbAmexSqwKQuDA_4xEOT20O',
-        authorization: 'Bearer sb_publishable_uEtrioCkKbAmexSqwKQuDA_4xEOT20O',
-    }
-  }
-);
-const data = await res.json();
-//console.log(data);
-//const filteredData = data.filter((fact)=>fact.category == 'technology');
+  const res = await fetch(
+    "https://ladfnwsrssiofdsbojeq.supabase.co/rest/v1/facts",
+    {
+      headers: {
+        apikey: "sb_publishable_uEtrioCkKbAmexSqwKQuDA_4xEOT20O",
+        authorization: "Bearer sb_publishable_uEtrioCkKbAmexSqwKQuDA_4xEOT20O",
+      },
+    },
+  );
+  const data = await res.json();
+  //console.log(data);
+  //const filteredData = data.filter((fact)=>fact.category == 'technology');
 
-createFactsList(data);
+  createFactsList(data);
 }
 
 function createFactsList(dataArray) {
-/*factsList.insertAdjacentHTML('afterbegin', "<li>Alexander is learning JavaScript!</li>");*/
+  /*factsList.insertAdjacentHTML('afterbegin', "<li>Alexander is learning JavaScript!</li>");*/
 
-const htmlArr  = dataArray.map((fact)=>`<li class="fact">
+  const htmlArr = dataArray.map(
+    (fact) => `<li class="fact">
     <p>
       ${fact.text}
       <a 
@@ -83,31 +85,25 @@ const htmlArr  = dataArray.map((fact)=>`<li class="fact">
     </p>
       <span class="tag" style="background-color: 
       ${CATEGORIES.find((cat) => cat.name === fact.category).color};">${fact.category}</span>
-    </li>`
-);
-const html = htmlArr.join('');
-factsList.insertAdjacentHTML('afterbegin', html);
+    </li>`,
+  );
+  const html = htmlArr.join("");
+  factsList.insertAdjacentHTML("afterbegin", html);
 }
 
-
-
 // Toggle form visibility
-btn.addEventListener('click', function () {
-    if(form.classList.contains('hidden')) {
-        form.classList.remove('hidden');
-        btn.textContent = 'Close';
-    } else {
-        form.classList.add('hidden');
-        btn.textContent = 'Share a fact';
-    }
+btn.addEventListener("click", function () {
+  if (form.classList.contains("hidden")) {
+    form.classList.remove("hidden");
+    btn.textContent = "Close";
+  } else {
+    form.classList.add("hidden");
+    btn.textContent = "Share a fact";
+  }
 });
 
-console.log([7,64,6,-23,11].filter((el) => el>10));
-console.log([7,64,6,-23,11].find((el) => el>10));
-
-
-
-
+console.log([7, 64, 6, -23, 11].filter((el) => el > 10));
+console.log([7, 64, 6, -23, 11].find((el) => el > 10));
 
 /*
 let votesInteresting = 23;
