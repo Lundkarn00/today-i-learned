@@ -24,7 +24,7 @@ const initialFacts = [
     votesInteresting: 24,
     votesMindblowing: 9,
     votesFalse: 4,
-    createdIn: 2021,
+    createdIn: "2021-06-01T12:00:00.000Z",
   },
   {
     id: 2,
@@ -35,7 +35,7 @@ const initialFacts = [
     votesInteresting: 11,
     votesMindblowing: 2,
     votesFalse: 0,
-    createdIn: 2019,
+    createdIn: "2019-03-15T09:00:00.000Z",
   },
   {
     id: 3,
@@ -45,7 +45,7 @@ const initialFacts = [
     votesInteresting: 8,
     votesMindblowing: 3,
     votesFalse: 1,
-    createdIn: 2015,
+    createdIn: "2015-01-01T08:00:00.000Z",
   },
 ];
 
@@ -68,6 +68,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentCategory, setCurrentCategory] = useState("all");
   const [darkMode, setDarkMode] = useState(true);
+  const [isSortingType, setIsSortingType] = useState(null);
 
   useEffect(
     function () {
@@ -75,17 +76,17 @@ function App() {
         setIsLoading(true);
 
         let query = supabase.from("facts").select("*");
-
         if (currentCategory !== "all")
           query = query.eq("category", currentCategory);
 
-        const { data: facts, error } = await query
-          .order("votesInteresting", { ascending: false })
-          .limit(1000);
+        // Default sort by newest if no sort selected
+        query = query.order(isSortingType || "created_at", {
+          ascending: false,
+        });
 
+        const { data: facts, error } = await query.limit(1000);
         if (!error) setFacts(facts);
         else alert("There was a problem getting data");
-        setFacts(facts);
         setIsLoading(false);
       }
       getFacts();
@@ -106,11 +107,34 @@ function App() {
       ) : null}
 
       <main className="main">
-        <CategoryFilter setCurrentCategory={setCurrentCategory} />
+        {facts.length === 0 ? (
+          <p className="message">
+            No facts for this category yet! Create the first one 😜
+          </p>
+        ) : (
+          ""
+        )}
+        <div>
+          <CategoryFilter setCurrentCategory={setCurrentCategory} />
+          <SortFacts
+            facts={facts}
+            setFacts={setFacts}
+            sortingType={isSortingType}
+            setIsSortingType={setIsSortingType}
+            darkMode={darkMode}
+          />
+        </div>
         {isLoading ? (
           <Loader />
         ) : (
-          <FactList facts={facts} setFacts={setFacts} />
+          <FactList
+            facts={
+              isSortingType && isSortingType !== "none"
+                ? [...facts].sort((a, b) => b[isSortingType] - a[isSortingType])
+                : facts
+            }
+            setFacts={setFacts}
+          />
         )}
       </main>
 
@@ -196,23 +220,13 @@ function NewFactForm({ setFacts, setShowForm }) {
 
     // 2. Check if data is valid. If so, create a new fact
     if (text && isValidHttpUrl(source) && category && textLength <= 200) {
-      // 3. Create a new fact object
-      // const newFact = {
-      //   id: Math.round(Math.random() * 10000000),
-      //   text,
-      //   source,
-      //   category,
-      //   votesInteresting: 0,
-      //   votesMindblowing: 0,
-      //   votesFalse: 0,
-      //   createdIn: new Date().getFullYear(),
-      // };
-
-      // 3. Upload fact to Supabase and recieve the new fact object
+      // 3. Upload fact to Supabase and receive the new fact object
       setIsUploading(true);
       const { data: newFact, error } = await supabase
         .from("facts")
-        .insert([{ text, source, category }])
+        .insert([
+          { text, source, category, created_at: new Date().toISOString() },
+        ])
         .select();
       setIsUploading(false);
 
@@ -293,6 +307,75 @@ function CategoryFilter({ setCurrentCategory }) {
   );
 }
 
+function SortFacts({
+  facts,
+  sortFacts,
+  sortingType,
+  setIsSortingType,
+  darkMode,
+}) {
+  function handleSort(e, columnName) {
+    e.preventDefault(); // Prevent form submition
+
+    //If clicking the same button again, remove the sort
+    if (sortingType === columnName) {
+      setIsSortingType("none");
+    } else {
+      setIsSortingType(columnName);
+    }
+  }
+
+  return (
+    <div className="sorting-buttons">
+      <h3>Sorting Facts</h3>
+      <div>
+        <button
+          type="button"
+          className={`btn btn-category category sorting-btn ${
+            darkMode ? "dark" : "light"
+          }`}
+          style={{
+            background: sortingType === "votesInteresting" ? "#3b82f6" : "",
+            color: sortingType === "votesInteresting" ? "white" : "",
+            fontWeight: sortingType === "votesInteresting" ? "bold" : "normal",
+          }}
+          onClick={(e) => handleSort(e, "votesInteresting")}
+        >
+          Sort by Interesting
+        </button>
+        <button
+          type="button"
+          className={`btn btn-category category sorting-btn ${
+            darkMode ? "dark" : "light"
+          }`}
+          style={{
+            background: sortingType === "votesMindblowing" ? "#3b82f6" : "",
+            color: sortingType === "votesMindblowing" ? "white" : "",
+            fontWeight: sortingType === "votesMindblowing" ? "bold" : "normal",
+          }}
+          onClick={(e) => handleSort(e, "votesMindblowing")}
+        >
+          Sort by Mindblowing
+        </button>
+        <button
+          type="button"
+          className={`btn btn-category category sorting-btn ${
+            darkMode ? "dark" : "light"
+          }`}
+          style={{
+            background: sortingType === "votesFalse" ? "#3b82f6" : "",
+            color: sortingType === "votesFalse" ? "white" : "",
+            fontWeight: sortingType === "votesFalse" ? "bold" : "normal",
+          }}
+          onClick={(e) => handleSort(e, "votesFalse")}
+        >
+          Sort by False
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function FactList({ facts, setFacts }) {
   if (facts.length === 0)
     return (
@@ -315,22 +398,78 @@ function FactList({ facts, setFacts }) {
 
 function Fact({ fact, setFacts }) {
   const [isUpdating, setIsUpdating] = useState(false);
+  const [votedButton, setVotedButton] = useState(null);
   const isDisputed =
     fact.votesInteresting + fact.votesMindblowing < fact.votesFalse;
 
   async function handleVote(columnName) {
+    if (isUpdating) return;
+    if (votedButton === columnName) return;
     setIsUpdating(true);
-    const { data: updatedFact, error } = await supabase
-      .from("facts")
-      .update({ [columnName]: fact[columnName] + 1 })
-      .eq("id", fact.id)
-      .select();
-    setIsUpdating(false);
 
-    if (!error)
-      setFacts((facts) =>
-        facts.map((f) => (f.id === fact.id ? updatedFact[0] : f)),
-      );
+    let updates = {};
+
+    // If clicking the same button again, remove the vote
+    if (votedButton === columnName) {
+      updates[columnName] = fact[columnName] - 1;
+
+      setIsUpdating(true);
+      const { data: updatedFact, error } = await supabase
+        .from("facts")
+        .update({ [columnName]: fact[columnName] + 1 })
+        .eq("id", fact.id)
+        .select()
+        .single();
+
+      setIsUpdating(false);
+
+      if (!error)
+        setFacts((facts) =>
+          facts.map((f) => (f.id === fact.id ? updatedFact[0] : f)),
+        );
+      setVotedButton(null); //Clear the vote
+    }
+    // If clicking a different button, move the vote
+    else if (votedButton) {
+      updates[votedButton] = fact[votedButton] - 1; // Remove from old button
+      updates[columnName] = fact[columnName] + 1; // Add to new button
+
+      const { data: updatedFact, error } = await supabase
+        .from("facts")
+        .update(updates)
+        .eq("id", fact.id)
+        .select()
+        .single();
+
+      setIsUpdating(false);
+
+      if (!error) {
+        setFacts((facts) =>
+          facts.map((f) => (f.id === fact.id ? updatedFact : f)),
+        );
+        setVotedButton(columnName); // Update to new button
+      }
+    }
+    // First time voting
+    else {
+      updates[columnName] = fact[columnName] + 1;
+
+      const { data: updatedFact, error } = await supabase
+        .from("facts")
+        .update(updates)
+        .eq("id", fact.id)
+        .select()
+        .single();
+
+      setIsUpdating(false);
+
+      if (!error) {
+        setFacts((facts) =>
+          facts.map((f) => (f.id === fact.id ? updatedFact : f)),
+        );
+        setVotedButton(columnName); // Set the voted button
+      }
+    }
   }
 
   return (
@@ -341,6 +480,7 @@ function Fact({ fact, setFacts }) {
         <a className="source" href={fact.source} target="_blank">
           (Source)
         </a>
+        <span className="time-ago">{getTimeAgo(fact.created_at)}</span>
       </p>
       <span
         className="tag"
@@ -370,6 +510,38 @@ function Fact({ fact, setFacts }) {
       </div>
     </li>
   );
+}
+
+function getTimeAgo(timestamp) {
+  if (!timestamp) return "unknown";
+  const now = new Date();
+  const factDate = new Date(timestamp);
+  if (isNaN(factDate.getTime())) {
+    console.warn("Invalid created_at value:", timestamp);
+    return "unknown";
+  }
+  const diffInSeconds = Math.floor((now - factDate) / 1000);
+  if (diffInSeconds < 60) {
+    return `${diffInSeconds}s ago`;
+  }
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+  if (diffInMinutes < 60) {
+    return `${diffInMinutes}m ago`;
+  }
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  if (diffInHours < 24) {
+    return `${diffInHours}h ago`;
+  }
+  const diffInDays = Math.floor(diffInHours / 24);
+  if (diffInDays < 30) {
+    return `${diffInDays}d ago`;
+  }
+  const diffInMonths = Math.floor(diffInDays / 30);
+  if (diffInMonths < 12) {
+    return `${diffInMonths}mo ago`;
+  }
+  const diffInYears = Math.floor(diffInMonths / 12);
+  return `${diffInYears}y ago`;
 }
 
 function Footer() {

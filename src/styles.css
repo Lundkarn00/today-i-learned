@@ -189,6 +189,13 @@ h1 {
   margin-top: 6px;
 }
 
+h3 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  font-family: "Coiny", sans-serif;
+}
+
 .category {
   margin-bottom: 16px;
 }
@@ -295,6 +302,12 @@ ul {
   color: var(--color-main-vote-bg);
 }
 
+.time-ago {
+  margin-left: 12px;
+  font-size: 14px;
+  color: var(--color-main-vote-bg);
+}
+
 /* Buttons */
 
 .btn {
@@ -384,6 +397,20 @@ ul {
   color: #ef4444;
   font-weight: 700;
   margin-right: 8px;
+}
+
+/* Sorting button*/
+.sorting-btn {
+  background-color: var(--color-main-vote-bg);
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.dark.sorting-btn {
+  background-color: var(--color-main-bg);
+  color: var(--color-main-text);
 }
 
 /* Footer */
