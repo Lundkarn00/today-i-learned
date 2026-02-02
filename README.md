@@ -12,68 +12,115 @@ A small fact-sharing web app. This repository contains a modern React implementa
 - `public/` — static public files and favicon used by the React app
 - `src/` — React source code (primary current app)
   - `src/App.js` — main app component and UI
-  - `src/index.js` — React entry
-  - `src/styles.css` — app styles
-- `v1/` — legacy vanilla-JS/static version (keeps original learning code)
-  - `v1/index.html`, `v1/script.js`, `v1/styles.css`, `v1/data.js`
-- `package.json` — project scripts and dependencies
 
-## Features
+  # Today I Learned 🧠
 
-- Share short facts with a source and category
-- Vote using three emoji categories: 👍 (interesting), 🤯 (mind-blowing), ⛔ (false)
-- Filter facts by category
-- Dark theme and responsive layout
+  Lightweight fact-sharing app with a modern React implementation (located in `src/`) and a legacy static version in `v1/` for quick demos.
 
-## Data model
+  ## Quick start
+  1. Install dependencies:
 
-Each fact is an object like:
+  ```bash
+  npm install
+  ```
 
-```javascript
-{
-   id: 1,
-   text: "Fact description",
-   source: "https://source-url.com",
-   category: "technology",
-   votesInteresting: 24,
-   votesMindblowing: 9,
-   votesFalse: 4,
-   createdIn: 2021
-}
-```
+  2. (Optional) Configure Supabase:
+  - Create a free Supabase project and a `facts` table matching the data model below.
+  - Set environment variables in a `.env.local` file at the project root:
 
-Categories are defined (colors included) in the legacy `v1/data.js`, and the React app uses the same category list in `src/`.
+  ```env
+  REACT_APP_SUPABASE_URL=https://your-project.supabase.co
+  REACT_APP_SUPABASE_KEY=public-anon-key
+  ```
 
-## Local development (React)
+  3. Start the dev server:
 
-Install and start the dev server:
+  ```bash
+  npm start
+  ```
 
-```bash
-npm install
-npm start
-```
+  4. Build for production:
 
-The React app runs at `http://localhost:3000` by default. Edit `src/App.js` and `src/styles.css` for UI changes.
+  ```bash
+  npm run build
+  ```
 
-## View the legacy static version
+  Run tests:
 
-Open `v1/index.html` directly in the browser, or serve it with a simple static server:
+  ```bash
+  npm test
+  ```
 
-```bash
-# from project root
-npx http-server v1 -p 8080
-# then open http://localhost:8080
-```
+  The React app runs at `http://localhost:3000` by default.
 
-## Contributing notes
+  ## Project layout
 
-- Add new categories in `v1/data.js` (and mirror in the React `src/` code if necessary).
-- Form, validation, and voting are implemented in `src/` — prefer editing React code for new features.
+  ```
+  today-i-learned/
+  ├── public/             # static assets for React app
+  ├── src/                # React app (current implementation)
+  ├── v1/                 # legacy static/vanilla-JS demo
+  ├── package.json
+  └── README.md
+  ```
 
-## License
+  Key files:
+  - `src/App.js` — main React app and components (Header, NewFactForm, FactList, Fact)
+  - `src/styles.css` — global styles and responsive rules
+  - `v1/data.js` — original category list and sample facts
 
-MIT
+  ## Data model
 
-## Credits
+  Facts follow this shape (used by Supabase and the React UI):
 
-- Initial project and learning materials adapted from a frontend tutorial and sample data (see `.github/copilot-instructions.md`).
+  ```javascript
+  {
+    id: 1,
+    text: "Fact description",
+    source: "https://source-url.com",
+    category: "technology",
+    votesInteresting: 24,
+    votesMindblowing: 9,
+    votesFalse: 4,
+    createdIn: 2021
+  }
+  ```
+
+  Categories and their colors are defined in `v1/data.js` and mirrored in `src/`.
+
+  ## Features
+  - Submit facts with a source and category
+  - Vote on facts (👍 interesting, 🤯 mind-blowing, ⛔ false)
+  - Category filtering, disputed badge when false votes exceed upvotes
+  - Dark theme and responsive layout
+
+  ## Development notes
+  - The React app uses `@supabase/supabase-js` to persist facts and votes. See `src/supabase.js` for the client setup.
+  - UI patterns: prefer `document`-free React components, use `useState` and `useEffect` for state and data fetching.
+  - CSS: dark theme variables and responsive breakpoints are in `src/styles.css`.
+
+  ## Legacy demo (v1)
+
+  Open `v1/index.html` in a browser for the original static demo, or serve the folder with a simple static server:
+
+  ```bash
+  npx http-server v1 -p 8080
+  # then open http://localhost:8080
+  ```
+
+  ## Contributing
+  - Add categories by updating `v1/data.js` and mirroring colors in `src/`.
+  - Implement new features in `src/` and keep the legacy demo in `v1/` as a reference.
+  - When modifying Supabase schema, update client queries in `src/App.js`.
+
+  ## Troubleshooting
+  - If you see errors about components in the browser, open the developer console for stack traces.
+  - Common issues:
+    - Missing `REACT_APP_SUPABASE_*` env variables — the app won't fetch/persist data.
+    - Syntax errors in `src/App.js` (e.g., incorrect hooks) will crash components — check the file for stray brackets or undefined identifiers.
+
+  ## License
+
+  MIT
+
+  ***
