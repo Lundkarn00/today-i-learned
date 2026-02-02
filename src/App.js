@@ -245,14 +245,18 @@ function NewFactForm({ setFacts, setShowForm }) {
 
   return (
     <form className="fact-form" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Share a fact with the world..."
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        disabled={isUploading}
-      />
-      <span>{200 - textLength}</span>
+      <div className="fact-input-group">
+        <input
+          type="text"
+          placeholder="Share a fact with the world..."
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          disabled={isUploading}
+          maxLength={200}
+        />
+        <span>{200 - textLength}</span>
+        {textLength === 200 && alert("You have reached the character limit!")}
+      </div>
       <input
         value={source}
         type="text"
@@ -276,6 +280,33 @@ function NewFactForm({ setFacts, setShowForm }) {
         Post
       </button>
     </form>
+  );
+}
+
+function InputLimit() {
+  const [text, setText] = useState("");
+  const maxChars = 200;
+
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
+  const charsLeft = maxChars - text.length;
+
+  return (
+    <>
+      <div>
+        <textarea value={text} onChange={handleChange} maxLength={maxChars} />
+        <div style={{ marginTop: "8px" }}>
+          {text.length}/{maxChars}
+        </div>
+        <p>{charsLeft} characters left</p>
+      </div>
+      {charsLeft === 0 && (
+        <p style={{ color: "red", marginTop: "4px" }}>
+          You have reached the character limit!
+        </p>
+      )}
+    </>
   );
 }
 
