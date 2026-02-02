@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import supabase from "./supabase";
 import "./styles.css";
-import { init } from "events";
 import { Sun, Moon } from "lucide-react";
 
 const CATEGORIES = [
@@ -107,13 +106,6 @@ function App() {
       ) : null}
 
       <main className="main">
-        {facts.length === 0 ? (
-          <p className="message">
-            No facts for this category yet! Create the first one 😜
-          </p>
-        ) : (
-          ""
-        )}
         <div>
           <CategoryFilter setCurrentCategory={setCurrentCategory} />
           <SortFacts
@@ -283,33 +275,6 @@ function NewFactForm({ setFacts, setShowForm }) {
   );
 }
 
-function InputLimit() {
-  const [text, setText] = useState("");
-  const maxChars = 200;
-
-  const handleChange = (e) => {
-    setText(e.target.value);
-  };
-  const charsLeft = maxChars - text.length;
-
-  return (
-    <>
-      <div>
-        <textarea value={text} onChange={handleChange} maxLength={maxChars} />
-        <div style={{ marginTop: "8px" }}>
-          {text.length}/{maxChars}
-        </div>
-        <p>{charsLeft} characters left</p>
-      </div>
-      {charsLeft === 0 && (
-        <p style={{ color: "red", marginTop: "4px" }}>
-          You have reached the character limit!
-        </p>
-      )}
-    </>
-  );
-}
-
 function CategoryFilter({ setCurrentCategory }) {
   return (
     <aside>
@@ -338,13 +303,7 @@ function CategoryFilter({ setCurrentCategory }) {
   );
 }
 
-function SortFacts({
-  facts,
-  sortFacts,
-  sortingType,
-  setIsSortingType,
-  darkMode,
-}) {
+function SortFacts({ sortingType, setIsSortingType, darkMode }) {
   function handleSort(e, columnName) {
     e.preventDefault(); // Prevent form submition
 
