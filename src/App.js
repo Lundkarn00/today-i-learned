@@ -2,6 +2,18 @@ import { useEffect, useState } from "react";
 import supabase from "./supabase";
 import "./styles.css";
 import { init } from "events";
+import { Sun, Moon } from "lucide-react";
+
+const CATEGORIES = [
+  { name: "technology", color: "#3b82f6" },
+  { name: "science", color: "#16a34a" },
+  { name: "finance", color: "#ef4444" },
+  { name: "society", color: "#eab308" },
+  { name: "entertainment", color: "#db2777" },
+  { name: "health", color: "#14b8a6" },
+  { name: "history", color: "#f97316" },
+  { name: "news", color: "#8b5cf6" },
+];
 
 const initialFacts = [
   {
@@ -55,6 +67,7 @@ function App() {
   const [facts, setFacts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentCategory, setCurrentCategory] = useState("all");
+  const [darkMode, setDarkMode] = useState(true);
 
   useEffect(
     function () {
@@ -82,7 +95,12 @@ function App() {
 
   return (
     <>
-      <Header showForm={showForm} setShowForm={setShowForm} />
+      <Header
+        showForm={showForm}
+        setShowForm={setShowForm}
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+      />
       {showForm ? (
         <NewFactForm setFacts={setFacts} setShowForm={setShowForm} />
       ) : null}
@@ -105,7 +123,7 @@ function Loader() {
   return <p className="message">Loading...</p>;
 }
 
-function Header({ showForm, setShowForm }) {
+function Header({ showForm, setShowForm, darkMode, setDarkMode }) {
   const appTitle = "Today I Learned";
 
   return (
@@ -114,26 +132,44 @@ function Header({ showForm, setShowForm }) {
         <img src="logo.png" height="68" width="68" alt="Today I Learned Logo" />
         <h1>{appTitle}</h1>
       </div>
-      <button
-        className="btn btn-large btn-open"
-        onClick={() => setShowForm((show) => !show)}
-      >
-        {showForm ? "Close" : "Share a fact"}
-      </button>
+      <div className="logo">
+        {/* Toggle Light and Dark Mode */}
+        <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
+        <button
+          className="btn btn-large btn-open"
+          onClick={() => setShowForm((show) => !show)}
+        >
+          {showForm ? "Close" : "Share a fact"}
+        </button>
+      </div>
     </header>
   );
 }
 
-const CATEGORIES = [
-  { name: "technology", color: "#3b82f6" },
-  { name: "science", color: "#16a34a" },
-  { name: "finance", color: "#ef4444" },
-  { name: "society", color: "#eab308" },
-  { name: "entertainment", color: "#db2777" },
-  { name: "health", color: "#14b8a6" },
-  { name: "history", color: "#f97316" },
-  { name: "news", color: "#8b5cf6" },
-];
+function DarkModeToggle({ darkMode, setDarkMode }) {
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+  return (
+    <>
+      <button
+        onClick={() => setDarkMode(!darkMode)}
+        className={`theme-toggle ${darkMode ? "dark" : "light"}`}
+        aria-label="Toggle dark mode"
+      >
+        <div className="icon-wrapper">
+          <Sun className={`theme-icon sun ${darkMode ? "hidden" : ""}`} />
+          <Moon className={`theme-icon moon ${darkMode ? "visible" : ""}`} />
+        </div>
+        <div className={`pulse-ring ${darkMode ? "dark" : "light"}`}></div>
+      </button>
+    </>
+  );
+}
 
 function isValidHttpUrl(string) {
   let url;
