@@ -104,7 +104,6 @@ function App() {
       {showForm ? (
         <NewFactForm setFacts={setFacts} setShowForm={setShowForm} />
       ) : null}
-
       <main className="main">
         <div>
           <CategoryFilter setCurrentCategory={setCurrentCategory} />
@@ -129,7 +128,6 @@ function App() {
           />
         )}
       </main>
-
       <Footer />
     </>
   );

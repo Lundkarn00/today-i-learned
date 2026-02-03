@@ -169,6 +169,7 @@ body {
 section {
   overflow: scroll;
   padding-bottom: 40px;
+  scrollbar-width: none;
 }
 
 /* Elements */
