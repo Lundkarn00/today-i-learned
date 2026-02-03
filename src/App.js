@@ -142,7 +142,11 @@ function Header({ showForm, setShowForm, darkMode, setDarkMode }) {
 
   return (
     <header className="header">
-      <div className="logo">
+      <div
+        className="logo"
+        style={{ cursor: "pointer" }}
+        onClick={() => window.location.reload()}
+      >
         <img src="logo.png" height="68" width="68" alt="Today I Learned Logo" />
         <h1>{appTitle}</h1>
       </div>
